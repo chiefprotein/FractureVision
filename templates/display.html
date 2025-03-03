@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CT Scan Viewer</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: rgba(50, 169, 209, 0.819);
+        }
+        img {
+            max-width: 100%;
+            height: 500px;
+            border: 2px solid black;
+        }
+        .slider-container {
+            width: 50%;
+            margin: 20px auto;
+        }
+        input[type="range"] {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>CT Scan Slices Viewer</h2>
+    <div class="slider-container">
+        <input type="range" id="sliceSlider" min="0" max="340" value="0" step="1" oninput="updateImage()">
+    </div>
+    <span id="sliceInfo"></span>
+    <br><br>
+    <img id="ctImage" src="" alt="CT Slice">
+    <script id="image-data" type="application/json">
+        {{ image_paths | tojson }}
+    </script>
+
+    <script>
+        
+        let image_paths = JSON.parse(document.getElementById("image-data").textContent);
+
+        const imgElement = document.getElementById("ctImage");
+        const sliceInfo = document.getElementById("sliceInfo");
+        const sliceSlider = document.getElementById("sliceSlider");
+
+        // Update the slider max based on the number of images
+        sliceSlider.max = image_paths.length - 1;
+
+        function updateImage() {
+            let currentIndex = sliceSlider.value;
+            imgElement.src = image_paths[currentIndex];
+            sliceInfo.textContent = `Slice ${parseInt(currentIndex) + 1} of ${image_paths.length}`;
+        }
+
+        // Initialize the first image
+        updateImage();
+    </script>
+
+</body>
+</html>

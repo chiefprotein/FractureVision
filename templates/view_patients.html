@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Patients</title>
+    <style>
+        /* General reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #0097a7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #ffffff;
+        }
+
+        .container {
+            background-color: #1e1e1e;
+            padding: 40px;
+            width: 100%;
+            max-width: 1400px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            text-align: center;
+        }
+
+        .container h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #00bcd4;
+        }
+
+        .container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        .container table, .container th, .container td {
+            border: 2px solid rgb(0, 0, 0);
+        }
+
+        .container th, .container td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        .container th {
+            background-color: #00bcd4;
+            color: #1e1e1e;
+        }
+
+        .container td {
+            background-color: #333;
+        }
+        .container a:visited {
+        color: white;
+    }
+
+    .container a:hover {
+        color: slateblue;
+    }
+
+        .container button {
+            padding: 12px 20px;
+            background-color: #00bcd4;
+            border: none;
+            border-radius: 5px;
+            color: #ffffff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .container button:hover {
+            background-color: #0097a7;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Existing Patients</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Middle Name</th>
+                    <th>Last Name</th>
+                    <th>Gender</th>
+                    <th>Date of Birth</th>
+                    <th>Age</th>
+                    <th>Diagnosis</th>
+                    <th>CT Scan</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for patient in patients %}
+                <tr>
+                    <td>{{ patient.first_name }}</td>
+                    <td>{{ patient.middle_name }}</td>
+                    <td>{{ patient.last_name }}</td>
+                    <td>{{ patient.gender }}</td>
+                    <td>{{ patient.dob.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ patient.age }}</td>
+                    <td>{{ patient.diagnosis }}</td>
+                    <td>
+                        <form action="{{ url_for('display', patient_id=patient.id) }}" method="get" style="display:inline;">
+                            <button type="submit">Display CT Scan</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="{{ url_for('delete_patient', patient_id=patient.id) }}" method="post" style="display:inline;">
+                            <button type="submit">Delete</button>
+                        </form>
+                        <form action="{{ url_for('generate_report_route', patient_id=patient.id) }}" method="get" style="display:inline;">
+                            <button type="submit">Generate Report</button>
+                        </form>
+                        <form action="{{ url_for('display', patient_id=patient.id) }}" method="get" style="display:inline;">
+                            <button type="submit">Detection</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <form action="{{ url_for('home') }}" method="get">
+            <button type="submit">Back to Home</button>
+        </form>
+    </div>
+
+</body>
+</html>

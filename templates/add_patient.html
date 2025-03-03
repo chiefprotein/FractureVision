@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Patient</title>
+    <style>
+        /* General reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Background styling */
+        body {
+            background-color: #0097a7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Form container styling */
+        .form-container {
+            background-color: #1e1e1e;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            color: #ffffff;
+        }
+
+        .form-container h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #00bcd4;
+        }
+
+        .form-container p {
+            font-size: 14px;
+            color: #b0b0b0;
+            margin-bottom: 30px;
+        }
+
+        /* Input fields */
+        .form-container input[type="text"],
+        .form-container input[type="date"],
+        .form-container input[type="file"],
+        .form-container textarea {
+            width: 100%;
+            padding: 12px 16px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: #ffffff;
+            font-size: 16px;
+            outline: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-container input[type="text"]:focus,
+        .form-container input[type="date"]:focus,
+        .form-container input[type="file"]:focus,
+        .form-container textarea:focus {
+            background-color: #444;
+        }
+        .form-container input[type="file"] {
+            display: none;
+        }
+
+        .form-container label[for="file-upload"] {
+            display: inline-block;
+            padding: 12px;
+            margin-top: 10px;
+            background-color: #4caf50;
+            border: none;
+            border-radius: 5px;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-container label[for="file-upload"]:hover {
+            background-color: #45a049;
+        }
+
+        /* Submit button */
+        .form-container button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background-color: #00bcd4;
+            border: none;
+            border-radius: 5px;
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-container button:hover {
+            background-color: #0097a7;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h1>Add Patient</h1>
+        <p>Please fill in the form to add a new patient</p>
+
+        <form action="{{ url_for('add_patient') }}" method="post" enctype="multipart/form-data">
+            <input type="text" placeholder="First Name" name="first_name" required>
+            <input type="text" placeholder="Middle Name" name="middle_name" required>
+            <input type="text" placeholder="Last Name" name="last_name" required>
+            <input type="text" placeholder="Gender" name="gender" required>
+            <input type="date" placeholder="Date of Birth" name="dob" required>
+            <textarea placeholder="Diagnosis" name="diagnosis" required></textarea>
+            <label for="file-upload">Choose File</label>
+            <input type="file" name="ct_scan" id="file-upload" accept=".nii,.nii.gz" required>
+            <button type="submit">Add Patient</button>
+        </form>
+    </div>
+
+</body>
+</html>

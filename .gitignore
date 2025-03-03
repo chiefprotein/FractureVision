@@ -1,0 +1,10 @@
+env/ # Ignore virtual environment
+__pycache__/ # Ignore Python cache files
+*.sqlite3 # Ignore database files
+env/
+__pycache__/
+*.sqlite3
+.vscode/
+instance/
+*.log
+.DS_Store
